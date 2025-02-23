@@ -1,89 +1,569 @@
 <!DOCTYPE html>
-<html>
-	<head>
-		<title>Selamat Datang</title>
-		<style>
-			body {
-				//background-color:red;
-				display: flex;
-				justify-content: center;
-				align-items: center;
-				flex-direction: column;
-				color: #4285f4;
-				font-family: monospace;
-				height: 100vh;
-			}
-			form {
-				//background-color:red;
-				display: flex;
-				justify-content: center;
-				align-items: center;
-				flex-direction: column;
-				width: 50vw;
-				padding: 30px 20px;
-				gap: 10px;
-				border: 3px #4285f4 solid;
-				border-radius: 5px;
-			}
-			input, textarea {
-				width:100%;
-				border: 3px #4285f4 solid;
-				border-radius: 5px;
-				color: #4285f4;
-				font-family: monospace;
-				padding: 5px;
-			}
-			button {
-				width:100%;
-				border: 3px #4285f4 solid;
-				border-radius: 5px;
-				background-color: #4285f4;
-				color: white;
-				font-family: monospace;
-				padding: 5px;
-				cursor: pointer;
-			}
-			button:hover {
-				background-color: lightblue;
-			}
-			img:hover {
-				transform: scale(1.1);
-			}
-		</style>
-	</head>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sitikus Chat</title>
+    <link rel="icon" href="https://media.tenor.com/x8v1oNUOmg4AAAAd/rickroll-roll.gif" type="image/gif">
+    <style>
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
 
+        @keyframes purr {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
+        }
 
-	<body class="text-primary bo">
-		<img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.pngmart.com%2Ffiles%2F23%2FProfile-PNG-Photo.png&f=1&nofb=1&ipt=3760029caebbaf743f8fcb44cd0bd44e2393142b18d18c944eacd11bdc940640&ipo=images" width="200px" />
-		<h1>Hi, Nama saya Sitikus</h1>
-		<p>nama saya sitikus, ini adalah laman sesawang
-gembira berjumpa awak!!!</p>
+        @keyframes blink {
+            0%, 100% { transform: scaleY(1); }
+            50% { transform: scaleY(0.1); }
+        }
 
-		<form>
-			<input id="nama" placeholder="Nama" />
-			<textarea id="msj" placeholder="Mesej" ></textarea>
-			<button id="hantar" >Hantar</button>
-	</body>
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
 
+        :root {
+            --primary: #ff6b6b;
+            --secondary: #4ecdc4;
+            --dark: #45b7af;
+            --light: #fff;
+            --gradient: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+        }
 
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
 
-	<script>	
-		const btnHantar = document.getElementById("hantar");
-		const fonNum = "15551234567"
+        body {
+            background: var(--gradient);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
 
-		btnHantar.addEventListener("click",()=>{
-			//alert("Selamat Datang!!!! 🐀");
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
 
-			const inama = 											document.getElementById("nama").value;
-			const imsj = 											document.getElementById("msj").value;
+        .profile {
+            position: relative;
+            margin-bottom: 30px;
+        }
 
-			const text = encodeURIComponent(`Hi, Saya ${inama}, ${imsj}`)
-			const link = `https://wa.me/${fonNum}?text=${text}`
+        .cat-container {
+            width: 150px;
+            height: 150px;
+            margin: 0 auto;
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
 
-			window.open(link,"_blank")
-			alert("Mesej telah dihantar!");
+        .cat-container:hover {
+            transform: scale(1.1) rotate(5deg);
+        }
 
-		});
-	</script>
+        .cat {
+            width: 100%;
+            height: 100%;
+        }
 
+        .cat .eye {
+            animation: blink 4s infinite;
+            transform-origin: center;
+        }
+
+        h1 {
+            background: linear-gradient(45deg, var(--primary), #ff9a9e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 2.5em;
+            margin: 20px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .typing-effect {
+            border-right: 2px solid var(--primary);
+            white-space: nowrap;
+            overflow: hidden;
+            animation: typing 3.5s steps(40, end);
+        }
+
+        p {
+            color: #666;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .form-group::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.4s ease;
+        }
+
+        .form-group:focus-within::after {
+            width: 100%;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 12px;
+            font-size: 1em;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        input:focus, textarea:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 20px rgba(255, 107, 107, 0.2);
+            transform: translateY(-2px);
+        }
+
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            background: var(--primary);
+            border: none;
+            border-radius: a2px;
+            color: white;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 300%;
+            height: 300%;
+            background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 60%);
+            transform: translate(-50%, -50%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        button:hover::before {
+            opacity: 1;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.3);
+        }
+
+        .emoji-rain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        .emoji {
+            position: absolute;
+            font-size: 20px;
+            user-select: none;
+            animation: fall linear;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+            }
+        }
+
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .toast {
+            background: var(--primary);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            animation: slideIn 0.5s ease forwards;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        .paw-print {
+            position: absolute;
+            opacity: 0.1;
+            pointer-events: none;
+        }
+
+        #cursor-trail {
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        .particle {
+            position: absolute;
+            background: var(--primary);
+            border-radius: 50%;
+            pointer-events: none;
+            opacity: 0.6;
+        }
+    </style>
+</head>
+<body>
+    <div id="cursor-trail"></div>
+    <div class="emoji-rain"></div>
+    <div class="container">
+        <div class="profile">
+            <div class="cat-container" onclick="triggerCatAction()">
+                <svg class="cat" viewBox="0 0 200 200">
+                    <defs>
+                        <radialGradient id="catGradient" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+                            <stop offset="0%" style="stop-color:#ff9a9e"/>
+                            <stop offset="100%" style="stop-color:#ff6b6b"/>
+                        </radialGradient>
+                    </defs>
+                    <circle cx="100" cy="100" r="90" fill="none" stroke="url(#catGradient)" stroke-width="4"/>
+                    <g class="eye">
+                        <circle cx="70" cy="80" r="10" fill="#ff6b6b"/>
+                        <circle cx="130" cy="80" r="10" fill="#ff6b6b"/>
+                    </g>
+                    <path class="mouth" d="M 60 120 Q 100 150 140 120" fill="none" stroke="#ff6b6b" stroke-width="4"/>
+                    <path d="M 70 50 L 90 30 L 110 50" fill="none" stroke="#ff6b6b" stroke-width="4"/>
+                    <path d="M 90 50 L 110 30 L 130 50" fill="none" stroke="#ff6b6b" stroke-width="4"/>
+                    <path class="whiskers" d="M 85 95 L 95 105 M 105 95 L 115 105" stroke="#ff6b6b" stroke-width="2"/>
+                </svg>
+            </div>
+        </div>
+
+        <h1 class="typing-effect">Hi, Saya Sitikus! 😺</h1>
+        <p>Selamat datang ke laman sesawang saya. Mari kita berbual dan berkenalan!</p>
+
+        <div class="form-group">
+            <input type="text" id="nama" placeholder="Nama anda..." autocomplete="off">
+        </div>
+        <div class="form-group">
+            <textarea id="mesej" placeholder="Mesej anda..."></textarea>
+        </div>
+        <button onclick="handleSubmit()">
+            Hantar Mesej 🐱
+        </button>
+    </div>
+
+    <div class="toast-container"></div>
+
+    <script>
+        // Cursor trail effect
+        const cursorTrail = document.getElementById('cursor-trail');
+        const particles = [];
+        const particleCount = 15;
+
+        document.addEventListener('mousemove', (e) => {
+            createParticle(e.clientX, e.clientY);
+        });
+
+        function createParticle(x, y) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = x + 'px';
+            particle.style.top = y + 'px';
+            particle.style.width = '8px';
+            particle.style.height = '8px';
+            cursorTrail.appendChild(particle);
+
+            particles.push({
+                element: particle,
+                x: x,
+                y: y,
+                life: 1
+            });
+
+            if (particles.length > particleCount) {
+                const oldParticle = particles.shift();
+                cursorTrail.removeChild(oldParticle.element);
+            }
+
+            animateParticle(particle);
+        }
+
+        function animateParticle(particle) {
+            let opacity = 1;
+            let scale = 1;
+
+            const animate = () => {
+                opacity -= 0.02;
+                scale -= 0.02;
+
+                if (opacity <= 0) {
+                    particle.remove();
+                    return;
+                }
+
+                particle.style.opacity = opacity;
+                particle.style.transform = `scale(${scale})`;
+                requestAnimationFrame(animate);
+            };
+
+            requestAnimationFrame(animate);
+        }
+
+        // Cat interaction
+        function triggerCatAction() {
+            const cat = document.querySelector('.cat-container');
+            cat.style.animation = 'purr 0.5s ease';
+            
+            setTimeout(() => {
+                cat.style.animation = '';
+            }, 500);
+
+            createEmojiRain(['🐱', '💖', '✨', '🌟'], 20);
+            playMeow();
+        }
+
+        // Emoji rain effect
+        function createEmojiRain(emojis, count) {
+            const container = document.querySelector('.emoji-rain');
+            
+            for (let i = 0; i < count; i++) {
+                const emoji = document.createElement('div');
+                emoji.className = 'emoji';
+                emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+                emoji.style.left = Math.random() * 100 + 'vw';
+                emoji.style.animationDuration = (Math.random() * 2 + 1) + 's';
+                container.appendChild(emoji);
+
+                emoji.addEventListener('animationend', () => emoji.remove());
+            }
+        }
+
+        // Play meow sound
+        function playMeow() {
+            const audio = new Audio('data:audio/wav;base64,SUQzBAAAAAAAI1RTU0UAAAAPAAADTGF2ZjU4Ljc2LjEwMAAAAAAAAAAAAAAA//tQxAADB8AHBTAAAANDSgnA3AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
+            audio.play().catch(() => {});
+        }
+
+        // Message handling
+        function handleSubmit() {
+            const nama = document.getElementById('nama').value;
+            const mesej = document.getElementById('mesej').value;
+
+            if (!nama || !mesej) {
+                showToast('Sila isi semua maklumat! 😸');
+                return;
+            }
+
+            const text = `Hi nama saya ${nama}, ${mesej}`;
+            const whatsappUrl = `https://wa.me/15551234567?text=${encodeURIComponent(text)}`;
+            
+            createEmojiRain(['💌', '✨', '💝', '🌟'], 15);
+            showToast('Mesej sudah dihantar! 📫');
+            window.open(whatsappUrl, '_blank');
+
+            document.getElementById('nama').value = '';
+            document.getElementById('mesej').value = '';
+        }
+
+        function showToast(message) {
+            const container = document.querySelector('.toast-container');
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.textContent = message;
+
+            container.appendChild(toast);
+
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateX(100%)';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        // Initialize typing effect
+        document.addEventListener('DOMContentLoaded', () => {
+            createPawPrints();
+        });
+
+        // Create floating paw prints
+        function createPawPrints() {
+            const container = document.querySelector('.container');
+            const pawCount = 5;
+
+            for (let i = 0; i < pawCount; i++) {
+                const paw = document.createElement('div');
+                paw.className = 'paw-print';
+                paw.innerHTML = '🐾';
+                paw.style.fontSize = (Math.random() * 20 + 20) + 'px';
+                paw.style.left = Math.random() * 100 + '%';
+                paw.style.top = Math.random() * 100 + '%';
+            paw.style.transform = `rotate(${Math.random() * 360}deg)`;
+            container.appendChild(paw);
+
+            animatePawPrint(paw);
+        }
+    }
+
+    function animatePawPrint(paw) {
+        let y = parseFloat(paw.style.top);
+        let x = parseFloat(paw.style.left);
+        let angle = Math.random() * Math.PI * 2;
+        let speed = 0.5;
+
+        function float() {
+            x += Math.cos(angle) * speed;
+            y += Math.sin(angle) * speed;
+            angle += 0.02;
+
+            paw.style.top = y + '%';
+            paw.style.left = x + '%';
+
+            if (x < 0 || x > 100 || y < 0 || y > 100) {
+                paw.remove();
+                createNewPaw();
+            } else {
+                requestAnimationFrame(float);
+            }
+        }
+
+        float();
+    }
+
+    function createNewPaw() {
+        const paw = document.createElement('div');
+        paw.className = 'paw-print';
+        paw.innerHTML = '🐾';
+        paw.style.fontSize = (Math.random() * 20 + 20) + 'px';
+        paw.style.left = Math.random() < 0.5 ? '0%' : '100%';
+        paw.style.top = Math.random() * 100 + '%';
+        paw.style.transform = `rotate(${Math.random() * 360}deg)`;
+        document.querySelector('.container').appendChild(paw);
+        animatePawPrint(paw);
+    }
+
+    // Add custom effects
+    let idleTime = 0;
+    const idleInterval = setInterval(checkIdle, 1000);
+
+    function checkIdle() {
+        idleTime++;
+        if (idleTime > 10) { // 10 seconds
+            const cat = document.querySelector('.cat-container');
+            cat.style.animation = 'purr 2s infinite';
+            showToast('Jom berbual! 😺');
+            idleTime = 0;
+        }
+    }
+
+    document.addEventListener('mousemove', () => {
+        idleTime = 0;
+        const cat = document.querySelector('.cat-container');
+        cat.style.animation = '';
+    });
+
+    // Easter egg: Konami code
+    const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+    let konamiIndex = 0;
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === konamiCode[konamiIndex]) {
+            konamiIndex++;
+            if (konamiIndex === konamiCode.length) {
+                partyMode();
+                konamiIndex = 0;
+            }
+        } else {
+            konamiIndex = 0;
+        }
+    });
+
+    function partyMode() {
+        document.body.style.animation = 'gradient 2s ease infinite';
+        createEmojiRain(['🎉', '🎈', '🎊', '✨', '💫', '⭐️', '🌟'], 50);
+        showToast('Party mode activated! 🎉');
+        
+        const cat = document.querySelector('.cat-container');
+        cat.style.animation = 'purr 0.5s infinite';
+        
+        setTimeout(() => {
+            document.body.style.animation = 'gradient 15s ease infinite';
+            cat.style.animation = '';
+        }, 5000);
+    }
+
+    // Add input animations
+    const inputs = document.querySelectorAll('input, textarea');
+    inputs.forEach(input => {
+        input.addEventListener('focus', () => {
+            input.style.transform = 'scale(1.02)';
+        });
+        
+        input.addEventListener('blur', () => {
+            input.style.transform = 'scale(1)';
+        });
+        
+        input.addEventListener('input', () => {
+            if (input.value.length > 0) {
+                createEmojiRain(['✨'], 1);
+            }
+        });
+    });
+    </script>
+</body>
 </html>
